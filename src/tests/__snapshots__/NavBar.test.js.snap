@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavBar renders correctly 1`] = `
+<DocumentFragment>
+  <nav
+    class="navbar-container"
+  >
+    <a
+      aria-current="page"
+      class="active"
+      href="/"
+    >
+      Overview
+    </a>
+    <a
+      class=""
+      href="/projects"
+    >
+      Projects
+    </a>
+  </nav>
+</DocumentFragment>
+`;

@@ -1,12 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      var scrollAmountToShow = 100;
+      var navbar = $('.navbar-container');
+      var isNavbarVisible = true;
+
+      $(window).scroll(function () {
+        if ($(this).scrollTop() > scrollAmountToShow && isNavbarVisible) {
+          navbar.addClass('navbar-hidden');
+          isNavbarVisible = false;
+        } else if (
+          $(this).scrollTop() <= scrollAmountToShow &&
+          !isNavbarVisible
+        ) {
+          navbar.removeClass('navbar-hidden');
+          isNavbarVisible = true;
+        }
+      });
+    });
+  </script>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
-      content="A simple yet effective way of tracking progress of your personal and professional projects."
+      content="A simple yet effective way of tracking progress across your personal and professional projects."
     />
     <title>Task Master</title>
   </head>
