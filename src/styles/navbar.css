@@ -3,7 +3,8 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  background-color: red;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
   width: 100%;
   padding-top: 1em;
   padding-bottom: 1em;
@@ -11,13 +12,12 @@
   top: 0;
   z-index: 1000;
   transition: transform 0.3s ease;
-  font-family: 'Silkscreen', sans-serif;
   text-transform: uppercase;
 }
 
 .navbar-container a {
   text-decoration: none;
-  color: white;
+  color: #ec005a;
   position: relative;
   margin-right: 3em;
 }
@@ -31,7 +31,7 @@
   position: absolute;
   width: 100%;
   height: 3px;
-  background-color: white;
+  background-color: #ec005a;
   bottom: -4px;
   left: 0;
   transform: scaleX(0);
