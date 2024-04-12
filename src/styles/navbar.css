@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-evenly;
+  align-items: center;
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
   width: 100%;
@@ -13,13 +14,13 @@
   z-index: 1000;
   transition: transform 0.3s ease;
   text-transform: uppercase;
+  color: #ec005a;
 }
 
 .navbar-container a {
   text-decoration: none;
-  color: #ec005a;
   position: relative;
-  margin-right: 3em;
+  color: #ec005a;
 }
 
 .navbar-container a:last-child {
@@ -49,8 +50,11 @@
 }
 
 @media (min-width: 600px) {
+  .navbar-container {
+    justify-content: center;
+  }
+
   .navbar-container a {
-    text-decoration: none;
-    margin-right: 4em;
+    margin-left: 3em;
   }
 }

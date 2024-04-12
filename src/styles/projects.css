@@ -8,16 +8,23 @@
 }
 
 .projects-container-search {
+  color: #ec005a;
+  margin: 2em;
   display: flex;
   align-items: center;
-  margin: 1em;
+  justify-content: space-evenly;
+}
+
+.projects-container-search-input {
+  display: flex;
+  align-items: center;
   border: 3px solid #ec005a;
   background-color: white;
   border-radius: 0.25em;
+  width: 65%;
 }
 
 .search-icon {
-  color: #ec005a;
   margin-right: 0.5em;
   margin-left: 1em;
 }
@@ -56,6 +63,8 @@
   margin: 1em;
   padding: 1em;
   width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 @media (min-width: 600px) {
@@ -70,10 +79,6 @@
 
   .projects-container {
     margin-top: 5em;
-  }
-
-  .projects-container-search {
-    width: 20em;
   }
 
   .projects-container-card {
