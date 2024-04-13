@@ -6,20 +6,22 @@ import { faSearch, faFilter, faPlus } from '@fortawesome/free-solid-svg-icons';
 const projectsData = [
   {
     name: 'Gourmet Guide',
-    status: 'IN PROGRESS',
+    status: '',
+    task: ['Set up Git repo', 'Code something', 'Deploy app'],
+    due: '01/01/2024',
   },
-  {
-    name: 'Surreal Estate',
-    status: 'DUE',
-  },
-  {
-    name: 'Portfolio',
-    status: 'LATE',
-  },
-  {
-    name: 'Breakout Game',
-    status: 'COMPLETE',
-  },
+  // {
+  //   name: 'Surreal Estate',
+  //   status: 'COMPLETE',
+  // },
+  // {
+  //   name: 'Portfolio',
+  //   status: 'LATE',
+  // },
+  // {
+  //   name: 'Breakout Game',
+  //   status: 'COMPLETE',
+  // },
 ];
 
 const mappedProjectsData = projectsData.map((project, index) => ({
@@ -39,8 +41,8 @@ function Projects() {
 
   return (
     <div className='projects-container'>
-      <div className='projects-container-search'>
-        <div className='projects-container-search-input'>
+      <div className='projects-container-search-c1'>
+        <div className='projects-container-search-c2'>
           <FontAwesomeIcon icon={faSearch} className='search-icon' />
           <input
             type='text'
@@ -54,8 +56,14 @@ function Projects() {
       </div>
       <div className='projects-container-cards-group'>
         {filteredProjects.map((project) => (
-          <div key={project.id} className='projects-container-card'>
-            {project.name} {project.status} <button>Show</button>
+          <div key={project.id} className='projects-container-card-c1'>
+            <div className='projects-container-card-c2'>
+              {project.name} {project.status} Due: {project.due}
+            </div>
+            <div className='projects-container-card-c3'>
+              <ul><li>{project.task[0]}<input type="checkbox"/></li></ul>
+            </div>
+            <button>Show</button>
           </div>
         ))}
       </div>
