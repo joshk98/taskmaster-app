@@ -58,6 +58,7 @@
   border-radius: 1em;
   overflow: hidden;
   background-color: white;
+  color: #ec005a;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
   margin: 1em;
   padding: 1em;
@@ -85,7 +86,6 @@
 
 .projects-container-card-c3 ul {
   margin: 0;
-  padding-right: 1em;
   padding-left: 1em;
   list-style: none;
   display: inline-block;
@@ -119,6 +119,16 @@
   margin: 0;
 }
 
+/* .projects-container-card-c3 input {
+  background-color: #139c8a;
+  border-color: white;
+}
+
+.projects-container-card-c3 input:checked {
+  background-color: white;
+  color: rgb(35, 71, 71);
+} */
+
 .projects-container-card-c4 {
   display: flex;
   justify-content: space-between;
@@ -137,6 +147,14 @@
 
 .projects-container-card-c4 h3 {
   margin: 0;
+}
+
+.projects-container-card-c4 button {
+  border: 2px solid #ec005a;
+  border-radius: 0.25em;
+  color: #ec005a;
+  background-color: white;
+  margin-left: 2em;
 }
 
 @media (min-width: 600px) {

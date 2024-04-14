@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/projects.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faFilter, faPlus, faAnglesRight, faAnglesLeft } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faFilter, faPlus, faAnglesUp, faAnglesDown, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const projectsData = [
   {
@@ -10,9 +10,10 @@ const projectsData = [
     tasks: [
       { description: 'Set up Github repo', completed: false },
       { description: 'Code something', completed: false },
-      { description: 'Deploy app', completed: false }
+      { description: 'Deploy app', completed: false },
+      { description: 'Presentation', completed: false }
     ],
-    due: '01/01/2024',
+    due: '05/01/2024',
   },
 ];
 
@@ -22,31 +23,29 @@ const mappedProjectsData = projectsData.map((project, index) => ({
   showTasks: false,
 }));
 
-const currentDate = new Date();
-
-const updatedProjectsData = mappedProjectsData.map((project) => {
-  let status = '';
-
-  const dueDate = new Date(project.due);
-  const allTasksCompleted = project.tasks.every((task) => task.completed);
-
-  if (dueDate > currentDate && !allTasksCompleted) {
-    status = 'In Progress';
-  } else if (dueDate < currentDate && !allTasksCompleted) {
-    status = 'Late';
-  } else {
-    status = 'Complete';
-  }
-
-  return {
-    ...project,
-    status: status,
-  };
-});
-
 function Projects() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [projects, setProjects] = useState(updatedProjectsData);
+  const [projects, setProjects] = useState(() => {
+    const currentDate = new Date();
+    return mappedProjectsData.map((project) => {
+      let status = '';
+      const dueDate = new Date(project.due);
+      const allTasksCompleted = project.tasks.every((task) => task.completed);
+
+      if (allTasksCompleted) {
+        status = 'Complete';
+      } else if (dueDate < currentDate) {
+        status = 'Late';
+      } else {
+        status = 'In Progress';
+      }
+
+      return {
+        ...project,
+        status: status,
+      };
+    });
+  });
 
   const filteredProjects = projects
     .filter(({ name }) => {
@@ -98,9 +97,24 @@ function Projects() {
                             if (p.id === project.id) {
                               const updatedTasks = [...p.tasks];
                               updatedTasks[index].completed = e.target.checked;
+
+                              let status = '';
+                              const currentDate = new Date();
+                              const dueDate = new Date(p.due);
+                              const allTasksCompleted = updatedTasks.every((task) => task.completed);
+
+                              if (allTasksCompleted) {
+                                status = 'Complete';
+                              } else if (dueDate < currentDate) {
+                                status = 'Late';
+                              } else {
+                                status = 'In Progress';
+                              }
+
                               return {
                                 ...p,
                                 tasks: updatedTasks,
+                                status: status,
                               };
                             }
                             return p;
@@ -117,9 +131,12 @@ function Projects() {
               <h3 className='projects-container-card-c4-due'>
                 {project.status === 'Complete' ? 'Complete' : `Due: ${project.due}`}
               </h3>
-              <button onClick={() => toggleTasksVisibility(project.id)}>
-                {project.showTasks ? <FontAwesomeIcon icon={faAnglesLeft} /> : <FontAwesomeIcon icon={faAnglesRight} />}
-              </button>
+              <div>
+                <FontAwesomeIcon icon={faTrash} />
+                <button onClick={() => toggleTasksVisibility(project.id)}>
+                  {project.showTasks ? <FontAwesomeIcon icon={faAnglesUp} /> : <FontAwesomeIcon icon={faAnglesDown} />}
+                </button>
+              </div>
             </div>
           </div>
         ))}
