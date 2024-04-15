@@ -132,7 +132,7 @@ function Projects() {
                 {project.status === 'Complete' ? 'Complete' : `Due: ${project.due}`}
               </h3>
               <div>
-                <FontAwesomeIcon icon={faTrash} />
+                <button><FontAwesomeIcon icon={faTrash} /></button>
                 <button onClick={() => toggleTasksVisibility(project.id)}>
                   {project.showTasks ? <FontAwesomeIcon icon={faAnglesUp} /> : <FontAwesomeIcon icon={faAnglesDown} />}
                 </button>
