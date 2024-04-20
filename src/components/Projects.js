@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import '../styles/projects.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faFilter, faPlus, faAnglesUp, faAnglesDown, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faFilter, faAnglesUp, faAnglesDown, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const projectsData = [
   {
     name: 'Gourmet Guide',
     status: '',
     tasks: [
-      { description: 'Set up Github repooooooooooooooooooooooooooooooooooooooooooooo', completed: false },
+      { description: 'Set up Github repo', completed: false },
       { description: 'Code something', completed: false },
       { description: 'Deploy app', completed: false },
       { description: 'Presentation', completed: false }
@@ -75,7 +75,7 @@ function Projects() {
           />
         </div>
         <button><FontAwesomeIcon icon={faFilter} /></button>
-        <button><FontAwesomeIcon icon={faPlus} /></button>
+        {/* <button><FontAwesomeIcon icon={faPlus} /></button> */}
       </div>
       <div className='projects-container-cards-group'>
         {filteredProjects.map((project) => (
@@ -89,39 +89,41 @@ function Projects() {
                   {project.tasks.map((task, index) => (
                     <li key={index}>
                       <div className="task-description">{task.description}</div>
-                      <input
-                        type="checkbox"
-                        checked={task.completed}
-                        onChange={(e) => {
-                          const updatedProjects = projects.map((p) => {
-                            if (p.id === project.id) {
-                              const updatedTasks = [...p.tasks];
-                              updatedTasks[index].completed = e.target.checked;
+                      <div className='checkbox'>
+                        <input
+                          type="checkbox"
+                          checked={task.completed}
+                          onChange={(e) => {
+                            const updatedProjects = projects.map((p) => {
+                              if (p.id === project.id) {
+                                const updatedTasks = [...p.tasks];
+                                updatedTasks[index].completed = e.target.checked;
 
-                              let status = '';
-                              const currentDate = new Date();
-                              const dueDate = new Date(p.due);
-                              const allTasksCompleted = updatedTasks.every((task) => task.completed);
+                                let status = '';
+                                const currentDate = new Date();
+                                const dueDate = new Date(p.due);
+                                const allTasksCompleted = updatedTasks.every((task) => task.completed);
 
-                              if (allTasksCompleted) {
-                                status = 'Complete';
-                              } else if (dueDate < currentDate) {
-                                status = 'Late';
-                              } else {
-                                status = 'In Progress';
+                                if (allTasksCompleted) {
+                                  status = 'Complete';
+                                } else if (dueDate < currentDate) {
+                                  status = 'Late';
+                                } else {
+                                  status = 'In Progress';
+                                }
+
+                                return {
+                                  ...p,
+                                  tasks: updatedTasks,
+                                  status: status,
+                                };
                               }
-
-                              return {
-                                ...p,
-                                tasks: updatedTasks,
-                                status: status,
-                              };
-                            }
-                            return p;
-                          });
-                          setProjects(updatedProjects);
-                        }}
-                      />
+                              return p;
+                            });
+                            setProjects(updatedProjects);
+                          }}
+                        />
+                        </div>
                     </li>
                   ))}
                 </ul>
@@ -129,7 +131,7 @@ function Projects() {
             </div>
             <div className='projects-container-card-c4'>
               <h2 className='projects-container-card-c4-due'>
-                {project.status === 'Complete' ? 'Complete' : `Due: ${project.due}`}
+                {project.status === 'Complete' ? 'Complete!' : `Due: ${project.due}`}
               </h2>
               <div>
                 <button><FontAwesomeIcon icon={faTrash} /></button>

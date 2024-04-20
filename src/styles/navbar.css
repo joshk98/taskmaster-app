@@ -2,13 +2,13 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
   width: 100%;
-  padding-top: 1em;
-  padding-bottom: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
   position: fixed;
   top: 0;
   z-index: 1000;
@@ -17,14 +17,30 @@
   color: #4267b2;
 }
 
+.navbar-container-title {
+  margin-left: 1.5em;
+  font-size: 1.25rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.robot {
+  margin-bottom: 3px;
+  font-size: 1.5rem;
+}
+
 .navbar-container a {
   text-decoration: none;
   position: relative;
   color: rgb(52, 52, 52);
+  margin-left: 2em;
 }
 
-.navbar-container a:last-child {
-  margin-right: 0;
+.navbar-container-links {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 2em;
 }
 
 .navbar-container a::before {
