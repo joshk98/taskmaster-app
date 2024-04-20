@@ -5,4 +5,16 @@ body {
   font-size: 1rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: white;
+  /* background-image: url(../src/images/img-bg.png);
+  background-attachment: fixed;
+  background-size: cover; */
+}
+
+h1,
+h2,
+h3,
+strong {
+  font-family: 'Bebas Neue', sans-serif;
+  margin: 0;
 }

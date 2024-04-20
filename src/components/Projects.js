@@ -8,7 +8,7 @@ const projectsData = [
     name: 'Gourmet Guide',
     status: '',
     tasks: [
-      { description: 'Set up Github repo', completed: false },
+      { description: 'Set up Github repooooooooooooooooooooooooooooooooooooooooooooo', completed: false },
       { description: 'Code something', completed: false },
       { description: 'Deploy app', completed: false },
       { description: 'Presentation', completed: false }
@@ -74,21 +74,21 @@ function Projects() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <FontAwesomeIcon icon={faFilter} />
-        <FontAwesomeIcon icon={faPlus} />
+        <button><FontAwesomeIcon icon={faFilter} /></button>
+        <button><FontAwesomeIcon icon={faPlus} /></button>
       </div>
       <div className='projects-container-cards-group'>
         {filteredProjects.map((project) => (
           <div key={project.id} className='projects-container-card-c1'>
             <div className='projects-container-card-c2'>
-              <h2>{project.name}</h2>
+              <h1>{project.name}</h1>
             </div>
             <div className={`projects-container-card-c3 ${!project.showTasks && 'hidden'}`}>
               {project.showTasks && (
                 <ul>
                   {project.tasks.map((task, index) => (
                     <li key={index}>
-                      {task.description}
+                      <div className="task-description">{task.description}</div>
                       <input
                         type="checkbox"
                         checked={task.completed}
@@ -128,9 +128,9 @@ function Projects() {
               )}
             </div>
             <div className='projects-container-card-c4'>
-              <h3 className='projects-container-card-c4-due'>
+              <h2 className='projects-container-card-c4-due'>
                 {project.status === 'Complete' ? 'Complete' : `Due: ${project.due}`}
-              </h3>
+              </h2>
               <div>
                 <button><FontAwesomeIcon icon={faTrash} /></button>
                 <button onClick={() => toggleTasksVisibility(project.id)}>

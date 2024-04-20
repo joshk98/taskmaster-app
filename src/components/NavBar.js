@@ -8,7 +8,7 @@ import "../styles/navbar.css";
 function NavBar() {
   return (
     <nav className="navbar-container">
-      Task Master
+      <h1>Task Master</h1>
       <NavLink to="/"><FontAwesomeIcon icon={faHouse} /></NavLink>
       <NavLink to="/projects"><FontAwesomeIcon icon={faList} /></NavLink>
       <a><FontAwesomeIcon icon={faUser} /></a>
