@@ -12,7 +12,7 @@ function NavBar() {
       <div className="navbar-container-links">
         <NavLink to="/"><FontAwesomeIcon icon={faHouse} /></NavLink>
         <NavLink to="/projects"><FontAwesomeIcon icon={faList} /></NavLink>
-        <a><FontAwesomeIcon icon={faPlus} /></a>
+        <NavLink to="/add-project"><FontAwesomeIcon icon={faPlus} /></NavLink>
       </div>
     </nav>
   );

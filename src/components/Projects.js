@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import '../styles/projects.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faFilter, faAnglesUp, faAnglesDown, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faAnglesUp, faAnglesDown, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const projectsData = [
   {
     name: 'Gourmet Guide',
-    status: '',
+    status: 'In Progress',
     tasks: [
       { description: 'Set up Github repo', completed: false },
       { description: 'Code something', completed: false },
@@ -15,6 +15,28 @@ const projectsData = [
     ],
     due: '05/01/2024',
   },
+  {
+    name: 'Project X',
+    status: 'In Progress',
+    tasks: [
+      { description: 'Research', completed: false },
+      { description: 'Design prototype', completed: false },
+      { description: 'Implement feature A', completed: false },
+      { description: 'Test functionality', completed: false }
+    ],
+    due: '04/30/2024',
+  },
+  {
+    name: 'Marketing Campaign',
+    status: 'In Progress',
+    tasks: [
+      { description: 'Define target audience', completed: false },
+      { description: 'Create marketing materials', completed: false },
+      { description: 'Launch advertising campaign', completed: false },
+      { description: 'Monitor campaign performance', completed: false }
+    ],
+    due: '05/15/2024',
+  },  
 ];
 
 const mappedProjectsData = projectsData.map((project, index) => ({
@@ -23,33 +45,34 @@ const mappedProjectsData = projectsData.map((project, index) => ({
   showTasks: false,
 }));
 
+function calculateProjectStatus(project) {
+  const currentDate = new Date();
+  const dueDate = new Date(project.due);
+  const allTasksCompleted = project.tasks.every((task) => task.completed);
+
+  if (allTasksCompleted) {
+    return 'Complete';
+  } else if (dueDate < currentDate) {
+    return 'Late';
+  } else {
+    return 'In Progress';
+  }
+}
+
 function Projects() {
   const [searchTerm, setSearchTerm] = useState('');
   const [projects, setProjects] = useState(() => {
-    const currentDate = new Date();
-    return mappedProjectsData.map((project) => {
-      let status = '';
-      const dueDate = new Date(project.due);
-      const allTasksCompleted = project.tasks.every((task) => task.completed);
-
-      if (allTasksCompleted) {
-        status = 'Complete';
-      } else if (dueDate < currentDate) {
-        status = 'Late';
-      } else {
-        status = 'In Progress';
-      }
-
-      return {
-        ...project,
-        status: status,
-      };
-    });
+    return mappedProjectsData.map((project) => ({
+      ...project,
+      id: project.id,
+      showTasks: false,
+      status: calculateProjectStatus(project),
+    }));
   });
 
   const filteredProjects = projects
     .filter(({ name }) => {
-      const nameMatch = name.toLowerCase().includes(searchTerm.toLowerCase());
+      const nameMatch = name.toLowerCase().startsWith(searchTerm.toLowerCase());
       return nameMatch;
     })
     .sort((a, b) => a.name.localeCompare(b.name));
@@ -74,8 +97,6 @@ function Projects() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <button><FontAwesomeIcon icon={faFilter} /></button>
-        {/* <button><FontAwesomeIcon icon={faPlus} /></button> */}
       </div>
       <div className='projects-container-cards-group'>
         {filteredProjects.map((project) => (
@@ -123,7 +144,7 @@ function Projects() {
                             setProjects(updatedProjects);
                           }}
                         />
-                        </div>
+                      </div>
                     </li>
                   ))}
                 </ul>
