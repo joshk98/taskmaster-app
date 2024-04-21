@@ -61,6 +61,9 @@ function calculateProjectStatus(project) {
 
 function Projects() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [filter, setFilter] = useState('');
+  const [sortBy, setSortBy] = useState('');
+
   const [projects, setProjects] = useState(() => {
     return mappedProjectsData.map((project) => ({
       ...project,
@@ -70,12 +73,22 @@ function Projects() {
     }));
   });
 
-  const filteredProjects = projects
-    .filter(({ name }) => {
-      const nameMatch = name.toLowerCase().startsWith(searchTerm.toLowerCase());
-      return nameMatch;
-    })
-    .sort((a, b) => a.name.localeCompare(b.name));
+  const filteredProjects = projects.filter((project) => {
+    const nameMatch = project.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const statusMatch = filter ? project.status === filter : true;
+    return nameMatch && statusMatch;
+  });
+
+  const sortedProjects = sortBy
+    ? [...filteredProjects].sort((a, b) => {
+        if (sortBy === 'name') {
+          return a.name.localeCompare(b.name);
+        } else if (sortBy === 'date') {
+          return new Date(a.due) - new Date(b.due);
+        }
+        return 0;
+      })
+    : filteredProjects;
 
   const toggleTasksVisibility = (projectId) => {
     setProjects((prevProjects) =>
@@ -83,6 +96,19 @@ function Projects() {
         project.id === projectId ? { ...project, showTasks: !project.showTasks } : project
       )
     );
+  };
+
+  const handleFilter = (status) => {
+    setFilter(status === filter ? '' : status);
+  };
+
+  const handleSortBy = (criteria) => {
+    setSortBy(criteria);
+  };
+
+  const handleShowAll = () => {
+    setFilter('');
+    setSortBy('');
   };
 
   return (
@@ -97,9 +123,44 @@ function Projects() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
+        <div className='filter-options'>
+          <button
+            className={filter === 'Late' ? 'active' : ''}
+            onClick={() => handleFilter('Late')}
+          >
+            Late
+          </button>
+          <button
+            className={filter === 'Complete' ? 'active' : ''}
+            onClick={() => handleFilter('Complete')}
+          >
+            Complete
+          </button>
+          <button
+            className={filter === 'In Progress' ? 'active' : ''}
+            onClick={() => handleFilter('In Progress')}
+          >
+            In Progress
+          </button>
+          <button onClick={handleShowAll}>Show All</button>
+        </div>
+        <div className='sort-options'>
+          <button
+            className={sortBy === 'name' ? 'active' : ''}
+            onClick={() => handleSortBy('name')}
+          >
+            Sort by Name
+          </button>
+          <button
+            className={sortBy === 'date' ? 'active' : ''}
+            onClick={() => handleSortBy('date')}
+          >
+            Sort by Date
+          </button>
+        </div>
       </div>
       <div className='projects-container-cards-group'>
-        {filteredProjects.map((project) => (
+        {sortedProjects.map((project) => (
           <div key={project.id} className='projects-container-card-c1'>
             <div className='projects-container-card-c2'>
               <h1>{project.name}</h1>
@@ -119,24 +180,10 @@ function Projects() {
                               if (p.id === project.id) {
                                 const updatedTasks = [...p.tasks];
                                 updatedTasks[index].completed = e.target.checked;
-
-                                let status = '';
-                                const currentDate = new Date();
-                                const dueDate = new Date(p.due);
-                                const allTasksCompleted = updatedTasks.every((task) => task.completed);
-
-                                if (allTasksCompleted) {
-                                  status = 'Complete';
-                                } else if (dueDate < currentDate) {
-                                  status = 'Late';
-                                } else {
-                                  status = 'In Progress';
-                                }
-
                                 return {
                                   ...p,
                                   tasks: updatedTasks,
-                                  status: status,
+                                  status: calculateProjectStatus({ ...p, tasks: updatedTasks }),
                                 };
                               }
                               return p;
