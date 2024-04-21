@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/projects.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faAnglesUp, faAnglesDown, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faAnglesUp, faAnglesDown, faTrash, faFilter } from '@fortawesome/free-solid-svg-icons';
 
 const projectsData = [
   {
@@ -74,7 +74,7 @@ function Projects() {
   });
 
   const filteredProjects = projects.filter((project) => {
-    const nameMatch = project.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const nameMatch = project.name.toLowerCase().startsWith(searchTerm.toLowerCase());
     const statusMatch = filter ? project.status === filter : true;
     return nameMatch && statusMatch;
   });
@@ -122,6 +122,7 @@ function Projects() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
+          {/* <FontAwesomeIcon icon={faFilter} /> */}
         </div>
         <div className='filter-options'>
           <button
@@ -142,9 +143,6 @@ function Projects() {
           >
             In Progress
           </button>
-          <button onClick={handleShowAll}>Show All</button>
-        </div>
-        <div className='sort-options'>
           <button
             className={sortBy === 'name' ? 'active' : ''}
             onClick={() => handleSortBy('name')}
@@ -157,6 +155,7 @@ function Projects() {
           >
             Sort by Date
           </button>
+          <button id='show-all' onClick={handleShowAll}>Show All</button>
         </div>
       </div>
       <div className='projects-container-cards-group'>

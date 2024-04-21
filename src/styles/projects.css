@@ -1,6 +1,6 @@
 .projects-container {
   margin: 0;
-  margin-top: 4em;
+  margin-top: 5em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,15 +11,14 @@
   color: rgb(52, 52, 52);
   margin: 1em;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.projects-container-search-c1 button {
-}
-
 .projects-container-search-c2 {
   display: flex;
+  flex-direction: row;
   align-items: center;
   border: 3px solid white;
   background-color: white;
@@ -27,6 +26,40 @@
   width: 85%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
   color: rgb(52, 52, 52);
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2em;
+}
+
+.filter-options button {
+  font-size: 1rem;
+  color: #4267b2;
+  border: 3px solid #4267b2;
+  border-radius: 0.5em;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  font-weight: bold;
+  padding: 0.35em;
+  margin: 0.35em;
+}
+
+.filter-options button.active,
+.filter-options button:hover {
+  color: white;
+  background-color: #4267b2;
+}
+
+#show-all,
+#show-all:hover {
+  color: white;
+  background-color: green;
+  border: 3px solid green;
 }
 
 .search-icon {
@@ -49,10 +82,6 @@
 
 .projects-container-search-c1 input:focus {
   outline: none;
-}
-
-.projects-container-search-c1 button {
-  font-size: 1rem;
 }
 
 .projects-container-cards-group {
@@ -150,6 +179,9 @@
   color: white;
   background-color: #4267b2;
   margin-left: 1em;
+  padding: 0.5em;
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
 }
 
 @media (min-width: 600px) {
