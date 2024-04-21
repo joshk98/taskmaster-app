@@ -13,7 +13,7 @@ const projectsData = [
       { description: 'Deploy app', completed: false },
       { description: 'Presentation', completed: false }
     ],
-    due: '05/01/2024',
+    due: '01/01/2024',
   },
   {
     name: 'Project X',
@@ -63,6 +63,7 @@ function Projects() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filter, setFilter] = useState('');
   const [sortBy, setSortBy] = useState('');
+  const [showFilterOptions, setShowFilterOptions] = useState(false);
 
   const [projects, setProjects] = useState(() => {
     return mappedProjectsData.map((project) => ({
@@ -111,52 +112,60 @@ function Projects() {
     setSortBy('');
   };
 
+  const toggleFilterOptions = () => {
+    setShowFilterOptions(!showFilterOptions)
+  };
+
   return (
     <div className='projects-container'>
       <div className='projects-container-search-c1'>
-        <div className='projects-container-search-c2'>
-          <FontAwesomeIcon icon={faSearch} className='search-icon' />
-          <input
-            type='text'
-            placeholder='Search by name'
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          {/* <FontAwesomeIcon icon={faFilter} /> */}
+        <div className='search-filter'>
+          <div className='projects-container-search-c2'>
+            <FontAwesomeIcon icon={faSearch} className='search-icon' />
+            <input
+              type='text'
+              placeholder='Search by name'
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          <FontAwesomeIcon icon={faFilter} className='filter-icon' onClick={toggleFilterOptions} />
         </div>
-        <div className='filter-options'>
-          <button
-            className={filter === 'Late' ? 'active' : ''}
-            onClick={() => handleFilter('Late')}
-          >
-            Late
-          </button>
-          <button
-            className={filter === 'Complete' ? 'active' : ''}
-            onClick={() => handleFilter('Complete')}
-          >
-            Complete
-          </button>
-          <button
-            className={filter === 'In Progress' ? 'active' : ''}
-            onClick={() => handleFilter('In Progress')}
-          >
-            In Progress
-          </button>
-          <button
-            className={sortBy === 'name' ? 'active' : ''}
-            onClick={() => handleSortBy('name')}
-          >
-            Sort by Name
-          </button>
-          <button
-            className={sortBy === 'date' ? 'active' : ''}
-            onClick={() => handleSortBy('date')}
-          >
-            Sort by Date
-          </button>
-          <button id='show-all' onClick={handleShowAll}>Show All</button>
-        </div>
+        {showFilterOptions && (
+          <div className='filter-options'>
+            <button
+              className={filter === 'Late' ? 'active' : ''}
+              onClick={() => handleFilter('Late')}
+            >
+              Late
+            </button>
+            <button
+              className={filter === 'Complete' ? 'active' : ''}
+              onClick={() => handleFilter('Complete')}
+            >
+              Complete
+            </button>
+            <button
+              className={filter === 'In Progress' ? 'active' : ''}
+              onClick={() => handleFilter('In Progress')}
+            >
+              In Progress
+            </button>
+            <button
+              className={sortBy === 'name' ? 'active' : ''}
+              onClick={() => handleSortBy('name')}
+            >
+              Sort by Name
+            </button>
+            <button
+              className={sortBy === 'date' ? 'active' : ''}
+              onClick={() => handleSortBy('date')}
+            >
+              Sort by Date
+            </button>
+            <button id='show-all' onClick={handleShowAll}>Show All</button>
+          </div>
+        )}
       </div>
       <div className='projects-container-cards-group'>
         {sortedProjects.map((project) => (
@@ -169,7 +178,9 @@ function Projects() {
                 <ul>
                   {project.tasks.map((task, index) => (
                     <li key={index}>
-                      <div className="task-description">{task.description}</div>
+                      <div className="task-description" style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
+                        {task.description}
+                      </div>
                       <div className='checkbox'>
                         <input
                           type="checkbox"
@@ -197,8 +208,8 @@ function Projects() {
               )}
             </div>
             <div className='projects-container-card-c4'>
-              <h2 className='projects-container-card-c4-due'>
-                {project.status === 'Complete' ? 'Complete!' : `Due: ${project.due}`}
+              <h2 className='projects-container-card-c4-due' style={{ color: project.status === 'Complete' ? 'green' : project.status === 'Late' ? 'red' : 'inherit' }}>
+                {project.status === 'Complete' ? 'Complete!' : project.status === 'Late' ? `Due: ${project.due} - LATE!` : `Due: ${project.due}`}
               </h2>
               <div>
                 <button><FontAwesomeIcon icon={faTrash} /></button>
